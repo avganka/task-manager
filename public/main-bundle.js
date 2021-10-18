@@ -1,7 +1,12 @@
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!*********************!*\
+  !*** ./src/main.js ***!
+  \*********************/
 const TASK_COUNT = 3;
 
 const createSiteMenuTemplate = () => {
-  return (`
+    return (`
     <section class="control__btn-wrap">
         <input type="radio" name="control" id="control__new-task" class="control__input visually-hidden" />
         <label for="control__new-task" class="control__label control__label--new-task">+ ADD NEW TASK</label>
@@ -15,7 +20,7 @@ const createSiteMenuTemplate = () => {
 
 
 const createSiteFilterTemplate = () => {
-  return (`
+    return (`
     <section class="main__filter filter container">
       <input type="radio" id="filter__all" class="filter__input visually-hidden" name="filter" checked />
       <label for="filter__all" class="filter__label">
@@ -37,7 +42,7 @@ const createSiteFilterTemplate = () => {
 };
 
 const createSiteBoardTemplate = () => {
-  return (`
+    return (`
     <section class="board container">
       <div class="board__filter-list">
         <a href="#" class="board__filter" data-sort-type="default">SORT BY DEFAULT</a>
@@ -53,7 +58,7 @@ const createSiteBoardTemplate = () => {
 };
 
 const createSiteTaskTemplate = () => {
-  return (`
+    return (`
 <article class="card card--black">
           <div class="card__form">
             <div class="card__inner">
@@ -98,7 +103,7 @@ const createSiteTaskTemplate = () => {
 };
 
 const createTaskEditTemplate = () => {
-  return (`
+    return (`
  <article class="card card--edit card--yellow card--repeat">
             <form class="card__form" method="get">
               <div class="card__inner">
@@ -300,14 +305,14 @@ const createTaskEditTemplate = () => {
 };
 
 const createLoadMoreButtonTemplate = () => {
-  return (`
+    return (`
  <button class="load-more" type="button">load more</button>
 `);
 };
 
 
 const render = (container, template, place = `beforeend`) => {
-  container.insertAdjacentHTML(place, template);
+    container.insertAdjacentHTML(place, template);
 };
 
 const siteMainElement = document.querySelector(`.main`);
@@ -323,7 +328,10 @@ const siteBoardContainer = siteMainElement.querySelector(`.board`);
 render(siteTaskListElement, createTaskEditTemplate());
 
 for (let i = 0; i < TASK_COUNT; i++) {
-  render(siteTaskListElement, createSiteTaskTemplate());
+    render(siteTaskListElement, createSiteTaskTemplate());
 }
 
 render(siteBoardContainer, createLoadMoreButtonTemplate());
+/******/ })()
+;
+//# sourceMappingURL=main-bundle.js.map
