@@ -5,13 +5,15 @@
   "description": "Учебный проект «Менеджер задач» от HTML Academy",
   "scripts": {
     "eslint": "eslint src/**/*.js",
+    "fix": "eslint --fix --ext .js,.jsx .",
     "test": "npm run eslint"
   },
   "devDependencies": {
-    "eslint": "6.1.0",
-    "eslint-config-htmlacademy": "0.5.2"
+    "eslint": "^7.2.0",
+    "eslint-config-htmlacademy": "^4.1.0"
   },
   "engines": {
     "node": "10"
-  }
+  },
+  "dependencies": {}
 }

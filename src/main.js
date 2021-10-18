@@ -1,5 +1,3 @@
-'use strict'
-
 const TASK_COUNT = 3;
 
 const createSiteMenuTemplate = () => {
@@ -12,8 +10,8 @@ const createSiteMenuTemplate = () => {
         <input type="radio" name="control" id="control__statistic" class="control__input visually-hidden" />
         <label for="control__statistic" class="control__label">STATISTICS</label>
       </section>
-    `)
-}
+    `);
+};
 
 
 const createSiteFilterTemplate = () => {
@@ -35,8 +33,8 @@ const createSiteFilterTemplate = () => {
       <input type="radio" id="filter__archive" class="filter__input visually-hidden" name="filter" />
       <label for="filter__archive" class="filter__label">Archive <span class="filter__archive-count">115</span></label>
     </section>
-    `)
-}
+    `);
+};
 
 const createSiteBoardTemplate = () => {
     return (`
@@ -51,8 +49,8 @@ const createSiteBoardTemplate = () => {
 
      
     </section>
-    `)
-}
+    `);
+};
 
 const createSiteTaskTemplate = () => {
     return (`
@@ -96,8 +94,8 @@ const createSiteTaskTemplate = () => {
             </div>
           </div>
         </article>
-`)
-}
+`);
+};
 
 const createTaskEditTemplate = () => {
     return (`
@@ -298,29 +296,29 @@ const createTaskEditTemplate = () => {
               </div>
             </form>
           </article>
-`)
-}
+`);
+};
 
 const createLoadMoreButtonTemplate = () => {
     return (`
  <button class="load-more" type="button">load more</button>
-`)
-}
+`);
+};
 
 
-const render = (container, template, place = 'beforeend') => {
+const render = (container, template, place = `beforeend`) => {
     container.insertAdjacentHTML(place, template);
-}
+};
 
-const siteMainElement = document.querySelector('.main');
-const siteHeaderElement = siteMainElement.querySelector('.main__control');
+const siteMainElement = document.querySelector(`.main`);
+const siteHeaderElement = siteMainElement.querySelector(`.main__control`);
 
-render(siteHeaderElement, createSiteMenuTemplate(), );
+render(siteHeaderElement, createSiteMenuTemplate());
 render(siteMainElement, createSiteFilterTemplate());
 render(siteMainElement, createSiteBoardTemplate());
 
-const siteTaskListElement = siteMainElement.querySelector('.board__tasks');
-const siteBoardContainer = siteMainElement.querySelector('.board');
+const siteTaskListElement = siteMainElement.querySelector(`.board__tasks`);
+const siteBoardContainer = siteMainElement.querySelector(`.board`);
 
 render(siteTaskListElement, createTaskEditTemplate());
 
