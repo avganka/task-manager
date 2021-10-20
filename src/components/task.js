@@ -1,16 +1,34 @@
-export const createSiteTaskTemplate = () => {
+import {MONTH_NAMES} from "../variables";
+import {formatTime} from "../utils";
+
+export const createSiteTaskTemplate = (task) => {
+  const {description, dueDate, color, repeatingDays, isArchived,
+        isFavorive} = task;
+
+  const isExpired = dueDate instanceof Date && dueDate < Date.now();
+  const isDateShowing = !!dueDate;
+  const date = isDateShowing ? `${dueDate.getDate()} ${MONTH_NAMES[dueDate.getMonth()]}` : ``;
+  const time = isDateShowing ? formatTime(dueDate) : ``;
+
+  const repeatClass = Object.values(repeatingDays).some(Boolean) ? `card--repeat` : ``;
+  const deadlineClass = isExpired ? `card--deadline` : ``;
+
+  const archiveBtnInactiveClass = isArchived ? `` : `card__btn--disable`;
+  const favoriteBtnInactiveClass = isFavorive ? `` : `card__btn--disable`;
+
+
   return (`
-<article class="card card--black">
+        <article class="card card--${color} ${repeatClass} ${deadlineClass}">
           <div class="card__form">
             <div class="card__inner">
               <div class="card__control">
                 <button type="button" class="card__btn card__btn--edit">
                   edit
                 </button>
-                <button type="button" class="card__btn card__btn--archive">
+                <button type="button" class="card__btn card__btn--archive ${archiveBtnInactiveClass}">
                   archive
                 </button>
-                <button type="button" class="card__btn card__btn--favorites card__btn--disabled">
+                <button type="button" class="card__btn card__btn--favorites ${favoriteBtnInactiveClass}">
                   favorites
                 </button>
               </div>
@@ -22,7 +40,7 @@ export const createSiteTaskTemplate = () => {
               </div>
 
               <div class="card__textarea-wrap">
-                <p class="card__text">Example task with default color.</p>
+                <p class="card__text">${description}</p>
               </div>
 
               <div class="card__settings">
@@ -30,8 +48,8 @@ export const createSiteTaskTemplate = () => {
                   <div class="card__dates">
                     <div class="card__date-deadline">
                       <p class="card__input-deadline-wrap">
-                        <span class="card__date">23 September</span>
-                        <span class="card__time">16:15</span>
+                        <span class="card__date">${date}</span>
+                        <span class="card__time">${time}</span>
                       </p>
                     </div>
                   </div>
