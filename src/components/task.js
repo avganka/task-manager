@@ -1,7 +1,9 @@
 import {MONTH_NAMES} from "../variables";
 import {formatTime} from "../utils";
+import {createElement} from "../utils";
 
-export const createSiteTaskTemplate = (task) => {
+
+const createTaskTemplate = (task) => {
   const {description, dueDate, color, repeatingDays, isArchived,
         isFavorive} = task;
 
@@ -60,3 +62,25 @@ export const createSiteTaskTemplate = (task) => {
         </article>
 `);
 };
+
+export default class TaskComponent {
+  constructor(task) {
+    this._task = task;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTaskTemplate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElemet() {
+    this._element = null;
+  }
+}
