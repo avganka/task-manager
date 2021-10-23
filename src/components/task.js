@@ -1,5 +1,5 @@
 import {MONTH_NAMES} from "../variables";
-import {formatTime} from "../utils";
+import {formatTime} from "../utils/common";
 import AbstractComponent from "./abstract-component";
 
 
@@ -72,5 +72,9 @@ export default class TaskComponent extends AbstractComponent {
 
   getTemplate() {
     return createTaskTemplate(this._task);
+  }
+
+  setEditBtnHandler(handler) {
+     this.getElement().querySelector(`.card__btn--edit`).addEventListener(`click`, handler);
   }
 }
