@@ -20,14 +20,14 @@ export default class SortComponent extends AbstractComponent {
 constructor() {
   super();
 
-  this._currentSorType = SORT_TYPE.DEFAULT;
+  this._currentSortType = SORT_TYPE.DEFAULT;
 }
    getTemplate() {
     return createSortTemplate();
   }
 
   getSortType() {
-
+    return this._currentSortType;
   }
 
   setSortTypeChangeHandler(handler) {
@@ -39,13 +39,13 @@ constructor() {
 
     const sortType = evt.target.dataset.sortType;
 
-    if (this._currentSorType === sortType) {
+    if (this._currentSortType === sortType) {
       return;
     }
 
-    this._currentSorType = sortType;
+    this._currentSortType = sortType;
 
-    handler(this._currentSorType);
+    handler(this._currentSortType);
 
     });
 
