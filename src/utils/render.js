@@ -29,6 +29,9 @@ export const replace = (newComponent, oldComponent) => {
 };
 
 export const remove = (component) => {
-   component.getElemet.remove();
-   component.removeElemet();
+//   if (!(component instanceof AbstractComponent)) {
+//     throw new Error(`Can remove only components`);
+//   }
+   component.getElement().remove();
+   component.removeElement();
 };
