@@ -22,6 +22,15 @@ export default class TaskController {
           replace(this._taskComponent, this._taskEditomponent);
         });
 
+        this._taskComponent.setArchiveBtnClickHandler(() => {
+
+        });
+
+        this._taskComponent.setFavoritesBtnClickHandler(() => {
+
+        });
+
+
         render(this._container, this._taskComponent, `beforeend`);
     }
 }
