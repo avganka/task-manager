@@ -19,7 +19,7 @@ export default class TaskController {
         this._taskEditComponent = new TaskEditComponent(task);
         this._taskEditComponent.setSubmitHandler((evt) => {
           evt.preventDefault();
-          replace(this._taskComponent, this._taskEditomponent);
+          replace(this._taskComponent, this._taskEditComponent);
         });
 
         this._taskComponent.setArchiveBtnClickHandler(() => {
