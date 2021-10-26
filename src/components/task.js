@@ -1,4 +1,4 @@
-import {MONTH_NAMES} from "../variables";
+import {MONTH_NAMES} from "../constants";
 import {formatTime} from "../utils/common";
 import AbstractComponent from "./abstract-component";
 

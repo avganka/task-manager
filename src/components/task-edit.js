@@ -1,6 +1,9 @@
-import {MONTH_NAMES, COLORS, DAYS} from "../variables";
+import {MONTH_NAMES, COLORS, DAYS} from "../constants";
 import {formatTime} from "../utils/common";
 import AbstractSmartComponent from "./abstract-smart-component";
+import flatpickr from "flatpickr";
+
+import "flatpickr/dist/flatpickr.min.css";
 
 const createColorsMarkup = (colors, currentColor) => {
   return colors
@@ -138,7 +141,10 @@ export default class TaskEditComponent extends AbstractSmartComponent {
 
     this._task = Object.assign({}, task, {isDateShowing: !!task.dueDate, isRepeatingClass: Object.values(task.repeatingDays).some(Boolean)});
     this._submitHandler = null;
+    this._flatpickr = null;
+
     this._subscribeOnEvents();
+    this._applyFlatpickr();
   }
 
   getTemplate() {
@@ -151,6 +157,8 @@ export default class TaskEditComponent extends AbstractSmartComponent {
   }
   rerender() {
     super.rerender();
+
+    this._applyFlatpickr();
   }
   reset() {
     const task = this._task;
@@ -163,9 +171,26 @@ export default class TaskEditComponent extends AbstractSmartComponent {
   }
 
   setSubmitHandler(handler) {
-    this.getElement().querySelector(`form`).addEventListener(`sumbit`, handler);
+    this.getElement().querySelector(`form`).addEventListener(`submit`, handler);
     this._submitHandler = handler;
   }
+
+  _applyFlatpickr() {
+    if (this._flatpickr) {
+      this._flatpickr.destroy();
+      this._flatpickr = null;
+    }
+
+    if (this._task.isDateShowing) {
+      const dateElement = this.getElement().querySelector(`.card__date`);
+      this._flatpickr = flatpickr(dateElement, {
+        altInput: true,
+        allowInput: true,
+        defaultDate: this._task.dueDate || `today`,
+      });
+    }
+  }
+
   _subscribeOnEvents() {
     const element = this.getElement();
 

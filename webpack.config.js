@@ -13,5 +13,13 @@ module.exports = {
     output: {
         filename: `main-bundle.js`,
         path: path.join(__dirname, `public`)
-    }
+    },
+    module: {
+        rules:[
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
+            },
+        ]
+    },
 };

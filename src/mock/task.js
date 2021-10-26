@@ -1,4 +1,4 @@
-import {COLORS} from "../variables";
+import {COLORS} from "../constants";
 
 const DefaultRepeatingDays = {
   'mo': false,
