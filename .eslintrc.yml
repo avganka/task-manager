@@ -5,5 +5,7 @@ extends: 'htmlacademy/es6'
 parserOptions: 
   sourceType: module
 rules: {
-  no-var: 'error'
+  no-var: 'error',  
+  indent: ["error", 2]
+
 }

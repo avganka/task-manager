@@ -9,98 +9,98 @@ const SHOWING_TASK_COUNT_ON_START = 8;
 const SHOWING_TASK_COUNT_BY_BUTTOM = 8;
 
 const renderTasks = (taskListElement, tasks) => {
-   return tasks.map((task) => {
-      const taskController = new TaskController(taskListElement);
-      taskController.render(task);
-      return taskController;
-   });
+  return tasks.map((task) => {
+    const taskController = new TaskController(taskListElement);
+    taskController.render(task);
+    return taskController;
+  });
 };
 
 const getSortedTasks = (tasks, sortType, from, to) => {
-   let sortedTasks = [];
-   const showingTasks = tasks.slice();
+  let sortedTasks = [];
+  const showingTasks = tasks.slice();
 
-   switch (sortType) {
-      case SORT_TYPE.DATE_UP:
-         sortedTasks = showingTasks.sort((a, b) => a.dueDate - b.dueDate);
-         break;
-      case SORT_TYPE.DATE_DOWN:
-         sortedTasks = showingTasks.sort((a, b) => b.dueDate - a.dueDate);
-         break;
-      case SORT_TYPE.DEFAULT:
-         sortedTasks = showingTasks;
-         break;
-   }
+  switch (sortType) {
+  case SORT_TYPE.DATE_UP:
+    sortedTasks = showingTasks.sort((a, b) => a.dueDate - b.dueDate);
+    break;
+  case SORT_TYPE.DATE_DOWN:
+    sortedTasks = showingTasks.sort((a, b) => b.dueDate - a.dueDate);
+    break;
+  case SORT_TYPE.DEFAULT:
+    sortedTasks = showingTasks;
+    break;
+  }
 
-   return sortedTasks.slice(from, to);
+  return sortedTasks.slice(from, to);
 };
 export default class BoardController {
-    constructor(container) {
-        this._container = container;
+  constructor(container) {
+    this._container = container;
 
-        this._task = [];
-        this._showedTaskControllers = [];
-        this._showingTasksCount = SHOWING_TASK_COUNT_ON_START;
-        this._sortComponent = new SortComponent();
-        this._tasksComponent = new TasksComponent();
-        this._loadMoreBtnComponent = new LoadBtnComponent();
+    this._task = [];
+    this._showedTaskControllers = [];
+    this._showingTasksCount = SHOWING_TASK_COUNT_ON_START;
+    this._sortComponent = new SortComponent();
+    this._tasksComponent = new TasksComponent();
+    this._loadMoreBtnComponent = new LoadBtnComponent();
 
-        this._onSortTypeChange = this._onSortTypeChange.bind(this);
+    this._onSortTypeChange = this._onSortTypeChange.bind(this);
 
-        this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
+    this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
+  }
+
+  render(tasks) {
+    this._tasks = tasks;
+    const container = this._container.getElement();
+    render(container, this._sortComponent, `beforeend`);
+    render(container, this._tasksComponent, `beforeend`);
+
+    const taskListElement = this._tasksComponent.getElement();
+
+    const newTasks = renderTasks(taskListElement, tasks.slice(0, this._showingTasksCount));
+    this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
+
+    this._renderLoadBtn();
+  }
+
+  _renderLoadBtn() {
+    if (this._showingTaskCount >= this._tasks.length) {
+      return;
     }
 
-    render(tasks) {
-         this._tasks = tasks;
-         const container = this._container.getElement();
-         render(container, this._sortComponent, `beforeend`);
-         render(container, this._tasksComponent, `beforeend`);
+    const container = this._container.getElement();
+    render(container, this._loadMoreBtnComponent, `beforeend`);
 
-         const taskListElement = this._tasksComponent.getElement();
+    this._loadMoreBtnComponent.setClickHandler(() => {
+      const prevTaskCount = this._showingTasksCount;
+      const taskListElement = this._tasksComponent.getElement();
+      this._showingTasksCount = this._showingTasksCount + SHOWING_TASK_COUNT_BY_BUTTOM;
 
-         const newTasks = renderTasks(taskListElement, tasks.slice(0, this._showingTasksCount));
-         this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
+      const sortedTasks = getSortedTasks(this._tasks, this._sortComponent.getSortType(), prevTaskCount, this._showingTasksCount);
+      const newTasks = renderTasks(taskListElement, sortedTasks);
 
-         this._renderLoadBtn();
-    }
+      this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
 
-    _renderLoadBtn() {
-      if (this._showingTaskCount >= this._tasks.length) {
-         return;
+      if (this._showingTasksCount >= this._tasks.length) {
+        remove(this._loadMoreBtnComponent);
       }
+    });
+  }
 
-      const container = this._container.getElement();
-      render(container, this._loadMoreBtnComponent, `beforeend`);
+  _onSortTypeChange(sortType) {
+    this._showingTasksCount = SHOWING_TASK_COUNT_BY_BUTTOM;
 
-      this._loadMoreBtnComponent.setClickHandler(() => {
-         const prevTaskCount = this._showingTasksCount;
-         const taskListElement = this._tasksComponent.getElement();
-         this._showingTasksCount = this._showingTasksCount + SHOWING_TASK_COUNT_BY_BUTTOM;
+    const sortedTasks = getSortedTasks(this._tasks, sortType, 0, this._showingTasksCount);
+    const taskListElement = this._tasksComponent.getElement();
 
-         const sortedTasks = getSortedTasks(this._tasks, this._sortComponent.getSortType(), prevTaskCount, this._showingTasksCount);
-         const newTasks = renderTasks(taskListElement, sortedTasks);
+    taskListElement.innerHTML = ``;
 
-         this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
+    renderTasks(taskListElement, sortedTasks.slice(0, this._showingTasksCount));
 
-         if (this._showingTasksCount >= this._tasks.length) {
-            remove(this._loadMoreBtnComponent);
-         }
-      });
-    }
-
-    _onSortTypeChange(sortType) {
-        this._showingTasksCount = SHOWING_TASK_COUNT_BY_BUTTOM;
-
-        const sortedTasks = getSortedTasks(this._tasks, sortType, 0, this._showingTasksCount);
-        const taskListElement = this._tasksComponent.getElement();
-
-        taskListElement.innerHTML = ``;
-
-        renderTasks(taskListElement, sortedTasks.slice(0, this._showingTasksCount));
-
-        const newTasks = renderTasks(taskListElement, sortedTasks.slice(0, this._showingTasksCount));
-        this._showedTaskControllers = newTasks;
-        this._renderLoadBtn();
-    }
+    const newTasks = renderTasks(taskListElement, sortedTasks.slice(0, this._showingTasksCount));
+    this._showedTaskControllers = newTasks;
+    this._renderLoadBtn();
+  }
 
 }

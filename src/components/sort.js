@@ -17,12 +17,12 @@ const createSortTemplate = () => {
 };
 
 export default class SortComponent extends AbstractComponent {
-constructor() {
-  super();
+  constructor() {
+    super();
 
-  this._currentSortType = SORT_TYPE.DEFAULT;
-}
-   getTemplate() {
+    this._currentSortType = SORT_TYPE.DEFAULT;
+  }
+  getTemplate() {
     return createSortTemplate();
   }
 
@@ -34,18 +34,18 @@ constructor() {
     this.getElement().addEventListener(`click`, (evt) => {
       evt.preventDefault();
       if (evt.target.tagName !== `A`) {
-      return;
+        return;
       }
 
-    const sortType = evt.target.dataset.sortType;
+      const sortType = evt.target.dataset.sortType;
 
-    if (this._currentSortType === sortType) {
-      return;
-    }
+      if (this._currentSortType === sortType) {
+        return;
+      }
 
-    this._currentSortType = sortType;
+      this._currentSortType = sortType;
 
-    handler(this._currentSortType);
+      handler(this._currentSortType);
 
     });
 

@@ -1,7 +1,7 @@
 import AbstractComponent from "./abstract-component";
 
 const createFilterMarkup = (filter, isChecked) => {
-const {name, count} = filter;
+  const {name, count} = filter;
   return (`
         <input 
         type="radio" 

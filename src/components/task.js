@@ -5,7 +5,7 @@ import AbstractComponent from "./abstract-component";
 
 const createTaskTemplate = (task) => {
   const {description, dueDate, color, repeatingDays, isArchived,
-        isFavorive} = task;
+    isFavorive} = task;
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
   const isDateShowing = !!dueDate;
@@ -64,7 +64,7 @@ const createTaskTemplate = (task) => {
 };
 
 export default class TaskComponent extends AbstractComponent {
-    constructor(task) {
+  constructor(task) {
     super();
 
     this._task = task;
@@ -75,14 +75,14 @@ export default class TaskComponent extends AbstractComponent {
   }
 
   setEditBtnHandler(handler) {
-     this.getElement().querySelector(`.card__btn--edit`).addEventListener(`click`, handler);
+    this.getElement().querySelector(`.card__btn--edit`).addEventListener(`click`, handler);
   }
 
   setFavoritesBtnClickHandler(handler) {
-     this.getElement().querySelector(`.card__btn--favorites`).addEventListener(`click`, handler);
+    this.getElement().querySelector(`.card__btn--favorites`).addEventListener(`click`, handler);
   }
 
-    setArchiveBtnClickHandler(handler) {
+  setArchiveBtnClickHandler(handler) {
     this.getElement().querySelector(`.card__btn--archive`).addEventListener(`click`, handler);
   }
 }
