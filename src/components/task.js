@@ -5,7 +5,7 @@ import AbstractComponent from "./abstract-component";
 
 const createTaskTemplate = (task) => {
   const {description, dueDate, color, repeatingDays, isArchived,
-    isFavorive} = task;
+    isFavorite} = task;
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
   const isDateShowing = !!dueDate;
@@ -15,8 +15,8 @@ const createTaskTemplate = (task) => {
   const repeatClass = Object.values(repeatingDays).some(Boolean) ? `card--repeat` : ``;
   const deadlineClass = isExpired ? `card--deadline` : ``;
 
-  const archiveBtnInactiveClass = isArchived ? `` : `card__btn--disable`;
-  const favoriteBtnInactiveClass = isFavorive ? `` : `card__btn--disable`;
+  const archiveBtnInactiveClass = isArchived ? `` : `card__btn--disabled`;
+  const favoriteBtnInactiveClass = isFavorite ? `` : `card__btn--disabled`;
 
 
   return (`
