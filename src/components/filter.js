@@ -6,31 +6,25 @@ const getFilterNameById = (id) => {
   return id.substring(FILTER_ID_PREFIX.length);
 };
 
-const createFilterMarkup = (filter, isChecked) => {
-  const {name, count} = filter;
-  return (`
-        <input 
-        type="radio" 
-        id="filter__${name}" 
-        class="filter__input visually-hidden" 
-        name="filter" 
-        ${isChecked ? `checked` : ``}        
-         />
-          <label for="filter__${name}" class="filter__label">
-        ${name} <span class="filter__${name}-count">${count}</span></label>
-  `);
-};
-
 const createSiteFilterTemplate = (filters) => {
-  const filterMarkup = filters.map((it) => createFilterMarkup(it, it.checked)).join(``);
-
   return (`
     <section class="main__filter filter container">
-    ${filterMarkup}
+    ${filters.map((it) => {
+      return (`
+        <input 
+        type="radio" 
+        id="filter__${it.name}" 
+        class="filter__input visually-hidden" 
+        name="filter" 
+        ${it.checked ? `checked` : ``}        
+         />
+          <label for="filter__${it.name}" class="filter__label">
+        ${it.name} <span class="filter__${it.name}-count">${it.count}</span></label>
+    `);
+    }).join(``)}
     </section>
     `);
 };
-
 
 export default class FilterComponent extends AbstractComponent {
   constructor(filters) {

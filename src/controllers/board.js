@@ -48,6 +48,7 @@ export default class BoardController {
     this._onDataChange = this._onDataChange.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
+    this._onLoadMoreButtonClick = this._onLoadMoreButtonClick.bind(this);
     this._onFilterChange = this._onFilterChange.bind(this);
 
     this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
@@ -73,6 +74,7 @@ export default class BoardController {
     const taskListElement = this._tasksComponent.getElement();
     const newTasks = renderTasks(taskListElement, tasks, this._onDataChange, this._onViewChange);
     this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
+    this._showingTasksCount = this._showedTaskControllers.length;
   }
   _updateTasks(count) {
     this._removeTasks();
@@ -90,17 +92,7 @@ export default class BoardController {
     const container = this._container.getElement();
     render(container, this._loadMoreBtnComponent, `beforeend`);
 
-    this._loadMoreBtnComponent.setClickHandler(() => {
-      const prevTaskCount = this._showingTasksCount;
-      const tasks = this._tasksModel.getTasks();
-      const taskListElement = this._tasksComponent.getElement();
-      this._showingTasksCount = this._showingTasksCount + SHOWING_TASK_COUNT_BY_BUTTOM;
-
-      const sortedTasks = getSortedTasks(tasks, this._sortComponent.getSortType(), prevTaskCount, this._showingTasksCount);
-      const newTasks = renderTasks(taskListElement, sortedTasks, this._onDataChange, this._onViewChange);
-
-      this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
-    });
+    this._loadMoreBtnComponent.setClickHandler(this._onLoadMoreButtonClick);
   }
 
   _onSortTypeChange(sortType) {
@@ -132,6 +124,19 @@ export default class BoardController {
 
   _onFilterChange() {
     this._updateTasks(SHOWING_TASK_COUNT_ON_START);
+  }
+  _onLoadMoreButtonClick() {
+    const prevTasksCount = this._showingTasksCount;
+    const tasks = this._tasksModel.getTasks();
+
+    this._showingTasksCount = this._showingTasksCount + SHOWING_TASK_COUNT_BY_BUTTOM;
+
+    const sortedTasks = getSortedTasks(tasks, this._sortComponent.getSortType(), prevTasksCount, this._showingTasksCount);
+    this._renderTasks(sortedTasks);
+
+    if (this._showingTasksCount >= sortedTasks.length) {
+      remove(this._loadMoreBtnComponent);
+    }
   }
 
 }

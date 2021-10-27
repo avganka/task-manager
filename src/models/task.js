@@ -39,7 +39,7 @@ export default class TasksModel {
 
   setFilter(filterType) {
     this._activeFilterType = filterType;
-    this._callHandlers(this._filterChangeHandler);
+    this._callHandlers(this._filterChangeHandlers);
   }
 
   setDataChangeHandler(handler) {
@@ -51,6 +51,6 @@ export default class TasksModel {
   }
 
   _callHandlers(handlers) {
-    handlers.forEach((handler) => handler());
+    handlers.forEach((handler) =>handler());
   }
 }
