@@ -38,7 +38,7 @@ const createRepeatingDaysMarkup = (days, repeatingDays) => {
         value="${day}"
         ${repeatingDays[day] ? `checked` : ``}
       />
-      <label class="card__repeat-day" for="repeat-mo-4"
+      <label class="card__repeat-day" for="repeat-${day}-${index}"
         >${day}</label
     >
     `);
@@ -209,7 +209,7 @@ export default class TaskEditComponent extends AbstractSmartComponent {
     const repeatDays = element.querySelector(`.card__repeat-days`);
     if (repeatDays) {
       repeatDays.addEventListener(`change`, (evt) => {
-        this.repeatingDays[evt.target.value] = evt.target.checked;
+        this._task.repeatingDays[evt.target.value] = evt.target.checked;
         this.rerender();
       });
     }
