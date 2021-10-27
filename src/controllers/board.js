@@ -96,17 +96,13 @@ export default class BoardController {
   }
 
   _onSortTypeChange(sortType) {
-    this._showingTasksCount = SHOWING_TASK_COUNT_BY_BUTTOM;
+    this._showingTasksCount = SHOWING_TASK_COUNT_ON_START;
 
     const sortedTasks = getSortedTasks(this._tasksModel.getTasks(), sortType, 0, this._showingTasksCount);
-    const taskListElement = this._tasksComponent.getElement();
 
-    taskListElement.innerHTML = ``;
+    this._removeTasks();
+    this._renderTasks(sortedTasks);
 
-    renderTasks(taskListElement, sortedTasks.slice(0, this._showingTasksCount));
-
-    const newTasks = renderTasks(taskListElement, sortedTasks.slice(0, this._showingTasksCount), this._onDataChange, this._onViewChange);
-    this._showedTaskControllers = newTasks;
     this._renderLoadBtn();
   }
 
