@@ -1,3 +1,12 @@
+export const FILTER_TYPE = {
+  ALL: `all`,
+  OVERDUE: `overdue`,
+  TODAY: `today`,
+  FAVORITES: `favorites`,
+  REPEATING: `repeating`,
+  ARCHIVE: `archive`,
+};
+
 export const COLORS = [
   `black`,
   `yellow`,

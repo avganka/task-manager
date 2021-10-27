@@ -42,6 +42,7 @@ const generateRepeatingDays = () => {
 const generateTask = () => {
   const dueDate = Math.random() > 0.5 ? getRandomDate() : null;
   return {
+    id: String(new Date() + Math.random()),
     color: getRandomArrayItem(COLORS),
     dueDate,
     description: getRandomArrayItem(DescriptionItems),

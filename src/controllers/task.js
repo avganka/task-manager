@@ -1,6 +1,6 @@
 import TaskComponent from "../components/task";
 import TaskEditComponent from "../components/task-edit";
-import {render, replace} from "../utils/render";
+import {render, replace, remove} from "../utils/render";
 
 
 const Mode = {
@@ -64,5 +64,10 @@ export default class TaskController {
     this._onViewChange();
     replace(this._taskEditComponent, this._taskComponent);
     this.mode = Mode.EDIT;
+  }
+
+  destroy() {
+    remove(this._taskEditComponent);
+    remove(this._taskComponent);
   }
 }
