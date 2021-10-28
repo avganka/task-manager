@@ -2,6 +2,7 @@ import {MONTH_NAMES} from "../constants";
 import {formatTime} from "../utils/common";
 import AbstractComponent from "./abstract-component";
 
+import {encode} from "he";
 
 const createTaskTemplate = (task) => {
   const {description, dueDate, color, repeatingDays, isArchived,
@@ -17,6 +18,7 @@ const createTaskTemplate = (task) => {
 
   const archiveBtnInactiveClass = isArchived ? `` : `card__btn--disabled`;
   const favoriteBtnInactiveClass = isFavorite ? `` : `card__btn--disabled`;
+  const encodeDescription = encode(description);
 
 
   return (`
@@ -42,7 +44,7 @@ const createTaskTemplate = (task) => {
               </div>
 
               <div class="card__textarea-wrap">
-                <p class="card__text">${description}</p>
+                <p class="card__text">${encodeDescription}</p>
               </div>
 
               <div class="card__settings">

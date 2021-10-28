@@ -4,6 +4,7 @@ import AbstractSmartComponent from "./abstract-smart-component";
 import flatpickr from "flatpickr";
 
 import "flatpickr/dist/flatpickr.min.css";
+import {encode} from "he";
 
 const createColorsMarkup = (colors, currentColor) => {
   return colors
@@ -51,17 +52,16 @@ const createTaskEditTemplate = (task) => {
 
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
-  // const isDateShowing = !!dueDate;
 
   const date = (isDateShowing && dueDate) ? `${dueDate.getDate()} ${MONTH_NAMES[dueDate.getMonth()]}` : ``;
   const time = (isDateShowing && dueDate) ? formatTime(dueDate) : ``;
 
-  // const isRepeatingClass = Object.values(repeatingDays).some(Boolean);
   const repeatClass = isRepeatingClass ? `card--repeat` : ``;
   const deadlineClass = isExpired ? `card--deadline` : ``;
 
   const colorsMarkup = createColorsMarkup(COLORS, color);
   const repeatingDaysMarkup = createRepeatingDaysMarkup(DAYS, repeatingDays);
+  const encodeDescription = encode(description);
 
   return (`
  <article class="card card--edit card--${color} ${repeatClass} ${deadlineClass}">
@@ -79,7 +79,7 @@ const createTaskEditTemplate = (task) => {
                       class="card__text"
                       placeholder="Start typing your text here..."
                       name="text"
-                    >${description}</textarea>
+                    >${encodeDescription}</textarea>
                   </label>
                 </div>
 
@@ -135,6 +135,25 @@ const createTaskEditTemplate = (task) => {
 `);
 };
 
+
+const parseFormData = (formData) => {
+  const repeatingDays = DAYS.reduce((acc, day) => {
+    acc[day] = false;
+    return acc;
+  }, {});
+  const date = formData.get(`date`);
+
+  return {
+    description: formData.get(`text`),
+    color: formData.get(`color`),
+    dueDate: date ? new Date(date) : null,
+    repeatingDays: formData.getAll(`repeat`).reduce((acc, it) => {
+      acc[it] = true;
+      return acc;
+    }, repeatingDays),
+  };
+};
+
 export default class TaskEditComponent extends AbstractSmartComponent {
   constructor(task) {
     super();
@@ -142,6 +161,8 @@ export default class TaskEditComponent extends AbstractSmartComponent {
     this._task = Object.assign({}, task, {isDateShowing: !!task.dueDate, isRepeatingClass: Object.values(task.repeatingDays).some(Boolean)});
     this._submitHandler = null;
     this._flatpickr = null;
+
+    this._deleteButtonClickHandler = null;
 
     this._subscribeOnEvents();
     this._applyFlatpickr();
@@ -151,8 +172,18 @@ export default class TaskEditComponent extends AbstractSmartComponent {
     return createTaskEditTemplate(this._task);
   }
 
+  removeElement() {
+    if (this._flatpickr) {
+      this._flatpickr.destroy();
+      this._flatpickr = null;
+    }
+
+    super.removeElement();
+  }
+
   recoveryListeners() {
     this.setSubmitHandler(this._submitHandler);
+    this.setDeleteButtonClickHandler(this._deleteButtonClickHandler);
     this._subscribeOnEvents();
   }
   rerender() {
@@ -162,12 +193,18 @@ export default class TaskEditComponent extends AbstractSmartComponent {
   }
   reset() {
     const task = this._task;
-
-    this.isDateShowing = !!task.dueDate;
-    this.isRepeatingClass = Object.values(task.repeatingDays).some(Boolean);
-    this.repeatingDays = Object.values(task.repeatingDays).some(Boolean);
+    this._task.isDateShowing = !!task.dueDate;
+    this._task.isRepeatingClass = Object.values(task.repeatingDays).some(Boolean);
+    this._task.repeatingDays = Object.values(task.repeatingDays).some(Boolean);
 
     this.rerender();
+  }
+
+  getData() {
+    const form = this.getElement().querySelector(`.card__form`);
+    const formData = new FormData(form);
+
+    return parseFormData(formData);
   }
 
   setSubmitHandler(handler) {
@@ -189,6 +226,11 @@ export default class TaskEditComponent extends AbstractSmartComponent {
         defaultDate: this._task.dueDate || `today`,
       });
     }
+  }
+
+  setDeleteButtonClickHandler(handler) {
+    this.getElement().querySelector(`.card__delete`).addEventListener(`click`, handler);
+    this._deleteButtonClickHandler = handler;
   }
 
   _subscribeOnEvents() {
