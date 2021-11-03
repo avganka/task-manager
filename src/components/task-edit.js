@@ -6,6 +6,12 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import {encode} from "he";
 
+const DefaultData = {
+  deleteBtnText: `Delete`,
+  saveBtnText: `Save`,
+};
+
+
 const createColorsMarkup = (colors, currentColor) => {
   return colors
     .map((color, index) => {
@@ -48,8 +54,11 @@ const createRepeatingDaysMarkup = (days, repeatingDays) => {
 
 
 const createTaskEditTemplate = (task) => {
-  const {description, dueDate, color, repeatingDays, isDateShowing, isRepeatingClass} = task;
+  const {description, dueDate, color, repeatingDays, isDateShowing, isRepeatingClass, externalData} = task;
 
+
+  const saveButtonText = externalData.saveBtnText;
+  const deleteButtonText = externalData.deleteBtnText;
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
 
@@ -61,6 +70,9 @@ const createTaskEditTemplate = (task) => {
 
   const colorsMarkup = createColorsMarkup(COLORS, color);
   const repeatingDaysMarkup = createRepeatingDaysMarkup(DAYS, repeatingDays);
+  // const isBlockSaveButton = (isDateShowing && isRepeatingClass) ||
+  //   (isRepeatingClass && !isRepeating(activeRepeatingDays)) ||
+  //   !isAllowableDescriptionLength(description);
   const encodeDescription = encode(description);
 
   return (`
@@ -126,44 +138,23 @@ const createTaskEditTemplate = (task) => {
                 </div>
 
                 <div class="card__status-btns">
-                  <button class="card__save" type="submit">save</button>
-                  <button class="card__delete" type="button">delete</button>
+                  <button class="card__save" type="submit" >${saveButtonText}</button>
+                  <button class="card__delete" type="button">${deleteButtonText}</button>
                 </div>
               </div>
             </form>
           </article>
 `);
 };
-
-
-const parseFormData = (formData) => {
-  const repeatingDays = DAYS.reduce((acc, day) => {
-    acc[day] = false;
-    return acc;
-  }, {});
-  const date = formData.get(`date`);
-
-  return {
-    description: formData.get(`text`),
-    color: formData.get(`color`),
-    dueDate: date ? new Date(date) : null,
-    repeatingDays: formData.getAll(`repeat`).reduce((acc, it) => {
-      acc[it] = true;
-      return acc;
-    }, repeatingDays),
-  };
-};
-
 export default class TaskEditComponent extends AbstractSmartComponent {
   constructor(task) {
     super();
 
-    this._task = Object.assign({}, task, {isDateShowing: !!task.dueDate, isRepeatingClass: Object.values(task.repeatingDays).some(Boolean)});
+    this._task = Object.assign({}, task, {isDateShowing: !!task.dueDate, isRepeatingClass: Object.values(task.repeatingDays).some(Boolean), externalData: DefaultData});
     this._submitHandler = null;
     this._flatpickr = null;
 
     this._deleteButtonClickHandler = null;
-
     this._subscribeOnEvents();
     this._applyFlatpickr();
   }
@@ -202,10 +193,14 @@ export default class TaskEditComponent extends AbstractSmartComponent {
 
   getData() {
     const form = this.getElement().querySelector(`.card__form`);
-    const formData = new FormData(form);
-
-    return parseFormData(formData);
+    return new FormData(form);
   }
+
+  setData(data) {
+    this._task.externalData = Object.assign({}, DefaultData, data);
+    this.rerender();
+  }
+
 
   setSubmitHandler(handler) {
     this.getElement().querySelector(`form`).addEventListener(`submit`, handler);

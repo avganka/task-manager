@@ -1,4 +1,4 @@
-import {isOverdue, isRepeating, isOneDay} from "./common";
+import {isOverdueDate, isRepeating, isOneDay} from "./common";
 import {FILTER_TYPE} from "../constants";
 
 export const getArchivedTasks = (tasks) => {
@@ -21,7 +21,7 @@ export const getOverdueTasks = (tasks, date) => {
       return false;
     }
 
-    return isOverdue(dueDate, date);
+    return isOverdueDate(dueDate, date);
   });
 };
 
@@ -38,7 +38,7 @@ export const getTasksByFilter = (tasks, filterType) => {
 
   switch (filterType) {
   case FILTER_TYPE.ALL:
-    return getArchivedTasks(tasks);
+    return getNotArchivedTasks(tasks);
   case FILTER_TYPE.ARCHIVE:
     return getArchivedTasks(tasks);
   case FILTER_TYPE.FAVORITES:

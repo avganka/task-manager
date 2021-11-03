@@ -1,0 +1,343 @@
+{"tasks": 
+  [
+  {
+    "id": 0,
+    "description": "Prepare for the pitch",
+    "due_date": "2021-11-06T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "black",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 1,
+    "description": "find money for travel",
+    "due_date": "2021-11-03T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "blue",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 2,
+    "description": "eat something",
+    "due_date": "2021-11-08T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "blue",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 3,
+    "description": "find money for travel",
+    "due_date": "2021-11-06T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "blue",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 4,
+    "description": "Prepare for the pitch",
+    "due_date": "2021-11-05T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "yellow",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 5,
+    "description": "find money for travel",
+    "due_date": "2021-11-07T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "yellow",
+    "is_favorite": false,
+    "is_archived": true
+  },
+  {
+    "id": 6,
+    "description": "eat something",
+    "due_date": "2021-11-06T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "black",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 7,
+    "description": "eat something",
+    "due_date": "2021-11-06T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "blue",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 8,
+    "description": "Prepare for the pitch",
+    "due_date": "2021-11-07T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "blue",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 9,
+    "description": "Prepare for the pitch",
+    "due_date": "2021-11-09T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "blue",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 10,
+    "description": "Prepare for the pitch",
+    "due_date": "2021-11-09T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "yellow",
+    "is_favorite": false,
+    "is_archived": true
+  },
+  {
+    "id": 11,
+    "description": "find money for travel",
+    "due_date": "2021-11-04T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "yellow",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 12,
+    "description": "find money for travel",
+    "due_date": "2021-11-09T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "yellow",
+    "is_favorite": true,
+    "is_archived": false
+  },
+  {
+    "id": 13,
+    "description": "find money for travel",
+    "due_date": "2021-11-09T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "yellow",
+    "is_favorite": false,
+    "is_archived": true
+  },
+  {
+    "id": 14,
+    "description": "eat something",
+    "due_date": "2021-11-04T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "blue",
+    "is_favorite": true,
+    "is_archived": false
+  },
+  {
+    "id": 15,
+    "description": "eat something",
+    "due_date": "2021-11-06T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "blue",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 16,
+    "description": "Prepare for the pitch",
+    "due_date": "2021-11-06T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "blue",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 17,
+    "description": "find money for travel",
+    "due_date": "2021-11-07T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "black",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 18,
+    "description": "find money for travel",
+    "due_date": "2021-11-05T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "yellow",
+    "is_favorite": false,
+    "is_archived": false
+  },
+  {
+    "id": 19,
+    "description": "eat something",
+    "due_date": "2021-11-04T23:59:59",
+    "repeating_days": {
+      "mo": false,
+      "tu": false,
+      "we": false,
+      "th": false,
+      "fr": false,
+      "sa": false,
+      "su": false
+    },
+    "color": "blue",
+    "is_favorite": false,
+    "is_archived": false
+  }
+]}

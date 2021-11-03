@@ -1,75 +1,36 @@
-import {getTasksByFilter} from "../utils/filter";
-import {FILTER_TYPE} from "../constants";
+export default class Task {
+  constructor(data) {
+    this.id = data[`id`];
+    this.description = data[`description`] || ``;
+    this.dueDate = data[`due_date`] ? new Date(data[`due_date`]) : null;
+    this.repeatingDays = data[`repeating_days`];
+    this.color = data[`color`];
+    this.isFavorite = Boolean(data[`is_favorite`]);
+    this.isArchived = Boolean(data[`is_archived`]);
 
-export default class TasksModel {
-  constructor() {
-    this._tasks = [];
-    this._activeFilterType = FILTER_TYPE.ALL;
-
-    this._dataChangeHandlers = [];
-    this._filterChangeHandlers = [];
   }
 
-  getTasks() {
-    return getTasksByFilter(this._tasks, this._activeFilterType);
+  toRaw() {
+    return {
+      "id": this.id,
+      "description": this.description,
+      "due_date": this.dueDate ? this.dueDate.toISOString() : null,
+      "repeating_days": this.repeatingDays,
+      "color": this.color,
+      "is_favorite": this.isFavorite,
+      "is_archived": this.isArchived,
+    };
   }
 
-  getTasksAll() {
-    return this._tasks;
+  static parseTask(data) {
+    return new Task(data);
   }
 
-  setTasks(tasks) {
-    this._tasks = Array.from(tasks);
-    this._callHandlers(this._dataChangeHandlers);
+  static parseTasks(data) {
+    return data.map(Task.parseTask);
   }
 
-  removeTask(id) {
-    const index = this._tasks.findIndex((it) => it.id === id);
-
-    if (index === -1) {
-      return false;
-    }
-
-    this._tasks = [].concat(this._tasks.slice(0, index), this._tasks.slice(index + 1));
-
-    this._callHandlers(this._dataChangeHandlers);
-
-    return true;
-  }
-
-  addTask(task) {
-    this._tasks = [].concat(task, this._tasks);
-    this._callHandlers(this._dataChangeHandlers);
-  }
-
-  updateTask(id, task) {
-    const index = this._tasks.findIndex((it) => it.id === id);
-
-    if (index === -1) {
-      return false;
-    }
-
-    this._tasks = [].concat(this._tasks.slice(0, index), task, this._tasks.slice(index + 1));
-
-    this._callHandlers(this._dataChangeHandlers);
-
-    return true;
-  }
-
-  setFilter(filterType) {
-    this._activeFilterType = filterType;
-    this._callHandlers(this._filterChangeHandlers);
-  }
-
-  setDataChangeHandler(handler) {
-    this._dataChangeHandlers.push(handler);
-  }
-
-  setFilterChangeHandler(handler) {
-    this._filterChangeHandlers.push(handler);
-  }
-
-  _callHandlers(handlers) {
-    handlers.forEach((handler) =>handler());
+  static clone(data) {
+    return new Task(data.toRaw());
   }
 }
